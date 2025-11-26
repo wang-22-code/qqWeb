@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="aaa.css">
+    <title>QQ注册页面</title>
+
+</head>
+<body>
+    <header><div class="feedback1"><strong>QQ|欢迎您</strong>
+        <a href="feedback.html"     style="text-decoration: none;"   target="_blank"  >意见反馈</a>
+        </div>
+       <div class="xian">________________________________________________________________________________________________________________________________________</div>
+        
+    </header>
+    <main><div>
+        <h1 class="t1">欢迎注册QQ</h1>
+        <h3 class="t2">每一天，乐在沟通</h3>
+
+            <input type="text" class="main1"  placeholder="昵称（例如somehow）"  id="nickname" name="nickname"><br>
+            <div><input type="password" class="main2" placeholder="密码(8-16个字符)" id="password" name="password"><br></div>
+            <!-- <input type="password" class="main2" placeholder="密码(8-16个字符)" id="password" name="password"><br> -->
+             <div>
+                <div class="tips" >长度 8-16 个字符，建议包含字母与数字</div>
+                <div id="pwdErr" class="error" hidden>密码需要 8-16 位</div>
+            </div>
+            
+
+            <div><select name="code" class="main_str">
+              <option value="+86" selected>+86</option>
+              <option value="+852">+852</option>
+              <option value="+853">+853</option>
+              <option value="+886">+886</option>
+              <input type="tel" class="main3" placeholder="手机号码" id="phone" required/><br>
+            </select></div>
+            <div class="field row gap8" id="smsRow" name="smsRow"  hidden >
+                <input id="re_password" type="text"  class="re_password" inputmode="numeric" pattern="[0-9]*" name="sms" placeholder="短信验证码"  style="flex:1">
+                <button id="send_password" type="button" class="send_password" >发送验证码</button>
+            </div>
+            
+            <!-- <input type="tel" class="main3" placeholder="手机号码"required><br> -->
+            <input type="checkbox" class="main4" placeholder="同意"required>
+            我已阅读并同意<a href="#" style="text-decoration: none;" class="yanse">服务协议</a> 和 <a href="#"  style="text-decoration: none;" class="yanse">隐私保护指引</a><br>
+
+            <div >
+                <button class="main5">立即注册</button><br>
+            </div>
+        </div>
+</main>
+    <footer>
+        <small>Copyright ©1998-2025Tencent All Rights Reserved.</small>
+</footer>
+    <script src="aaa_qq.js"></script>
+</body>
+</html>

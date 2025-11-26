@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>欢迎注册QQ（阶段2：样式）</title>
+  <link rel="stylesheet" href="registry.css">
+</head>
+
+<body>
+  <!--考虑到strong和a标签都是行内标签，不会独占一行；而且宽度和高度由内容决定
+  这里我们可以给他们各包裹一层块级元素（也就是容器）
+  可以让它们变成块级元素，这样在页面上会垂直排列，一个在上一个在下。
+  同时<div>和<nav>作为块级元素还能让里面的内容水平居中显示，而且<nav>是个语义化标签，
+  专门用来放导航链接，
+  告诉浏览器和开发者这里的内容是导航相关的。
+  -->
+  <header>
+    <!--Header 默认是块级-->
+    <div>
+      <strong>QQ</strong>
+    </div>
+    <nav>
+      <!-- 语义化标签，标识导航栏，告诉浏览器和开发者这里是导航区域 -->
+      <!--两个块级默认会堆叠-->
+      <a href="#" style="text-decoration: none; color: black;">意见反馈</a>
+      <!-- inherit-->
+    </nav>
+  </header>
+
+  <main>
+    <div class="card">
+      <!-- 这里的card 用于控制卡片容器，表单的整体宽度-->
+
+      <!-- 来看到主体部分，表单的大小和居中需要控制，
+       所以可以在外围包裹一个div通用容器，通过修改容器大小和居中，
+       实现表单的大小修改和居中 -->
+      <h1>欢迎注册QQ</h1>
+      <p class="subtitle">每一天，乐在沟通。</p>
+
+      <form onsubmit="return false">
+        <!--阻止表单真正提交，我们的表单仅用于演示-->
+
+        <div class="field">
+          <!--field控制表单项之间的垂直间距-->
+          <div class="input">
+            <!--input负责设置输入框容器样式-->
+
+
+            <!--考虑到为了实现更好的样式控制和布局管理，比如让这个输入框换行
+            因为输入框默认是行内元素，不会默认换行，所以我们可以用div容器包裹，
+            这样就可以利用块级元素默认换行的特性进行换行。
+            当然这只是其中一个作用，我们接着说。
+            我们可以在HTML表单中使用两层`div`嵌套
+            外层`div`负责整个表单字段的布局和间距，
+            内层`div`专门处理输入框的样式效果，这种结构提供了比直接使用`label`更强的样式灵活性和可维护性，
+            能够实现复杂的视觉效果如边框动画、内嵌图标等，
+            虽然增加了少量HTML结构但换取了CSS控制的极大便利性。-->
+            <input name="nickname" placeholder="昵称（例如：Somehow）" required>
+            <!--行内元素 默认不会独占一行 required 表单必填项-->
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="input">
+            <input type="password" name="password" placeholder="密码（8-16个字符）" required>
+          </div>
+          <!--密码这里我们看到会有一个简单的提示，
+          所以我们在这里可以加一个div，
+          这个div可以便于进行统一的样式管理和布局控制
+          比如能够让这个提示信息独立于输入框容器，
+          可以单独设置样式（比如字体更小、颜色更浅）
+          方便控制提示与输入框之间的间距，保持与其他表单元素一致的布局结构-->
+          <div class="tips">长度 8-16 个字符，建议包含字母与数字</div>
+        </div>
+
+        <div class="field row gap8">
+          <!--row 负责水平排列容器，设置为flex布局-->
+          <!-- gap8 配合.row使用，设置元素间的间距-->
+
+          <!--我们会发现手机号这里有一个选项框，
+          用于选择手机号的地区，
+          这里我们可以加一个select元素，以及它的子元素option
+          <select>是下拉选择框，用户点击后会展开选项列表（常配合<option>使用）
+          <option>是下拉框中的单个选项，用value定义提交值，selected设置默认选-->
+          <div class="input" style="width:120px">
+            <!--设置固定宽度120px可以让国际区号部分有一个明确的、统一的宽度-->
+            <select name="code">
+              <option value="+86" selected>+86</option>
+              <option value="+852">+852</option>
+              <option value="+853">+853</option>
+              <option value="+886">+886</option>
+            </select>
+          </div>
+          <div class="input" style="flex:1">
+            <!--最后说，样式写到这边再说。flex: 1的作用是让这个输入框能够根据容器大小自动调整自己的宽度，始终保持占满可用空间。-->
+            <input id="phone" type="tel" name="phone" placeholder="手机号" required>
+          </div>
+        </div>
+
+        <div class="field row gap8" id="smsRow" hidden>
+          <div class="input" style="flex:1">
+            <!--这里用flex:1，让输入框宽度占满整行-->
+            <input type="text" inputmode="numeric" pattern="[0-9]*" name="sms" placeholder="短信验证码">
+          </div>
+          <button type="button" class="btn" style="width:120px;background:#e7f0ff;color:#1677ff">发送验证码</button>
+          <!--发送验证码记得，单独的样式我们最后再搞-->
+        </div>
+
+        <label class="field agreement">
+          <!--label 是行级元素-->
+          <input type="checkbox" name="agree" required>
+          我已阅读并同意 <a href="#">服务协议</a> 和 <a href="#">隐私保护指引</a>
+          <!--两个用户协议的链接-->
+        </label>
+
+        <div class="field">
+          <!-- 为了保持表单结构的一致性和便于统一管理样式。
+           我们通过使用div.field容器包裹按钮，
+           可以使按钮与其他表单字段在布局上保持一致的间距和对齐方式， -->
+          <button class="btn" type="submit">立即注册</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <small>教学示例 · 无实际注册功能</small>
+  </footer>
+</body>
+
+</html>

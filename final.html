@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>欢迎注册QQ（阶段3：完善与小优化）</title>
+    <style>
+        /* 全局盒模型设置 */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* 页面整体样式 */
+        body {
+            margin: 0;
+            font: 16px/1.5 -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            color: #1f2329;
+            /* 主文字颜色 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background:
+                linear-gradient(to bottom, #eaf6ff, #d6ecff);
+
+        }
+
+        /* 头部和脚部样式 */
+        header,
+        footer {
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            color: #4f5b66;
+        }
+
+        /* 主体居中 */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        /* 卡片容器 */
+        .card {
+            width: 460px;
+            max-width: 92vw;
+        }
+
+        /* 主标题 */
+        h1 {
+            margin: 0 0 8px;
+            font-size: 36px;
+        }
+
+        /* 副标题 */
+        p.subtitle {
+            margin: 0 0 20px;
+            color: #6b7785;
+        }
+
+        /* 表单项间距 */
+        .field {
+            margin: 10px 0;
+        }
+
+        /* 输入框和行布局 */
+        .input,
+        .row {
+            display: flex;
+            align-items: center;
+        }
+
+        /* 输入框和下拉框样式 */
+        .input input,
+        .input select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e5eef7;
+            /* 边框颜色 */
+            border-radius: 6px;
+            outline: none;
+            background: #fff;
+        }
+
+        /* 输入框和下拉框聚焦时高亮 */
+        .input input:focus,
+        .input select:focus {
+            border-color: #9cc7ff;
+            box-shadow: 0 0 0 3px rgba(22, 119, 255, .15);
+        }
+
+        /* 行间距 */
+        .row.gap8 {
+            gap: 6px;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 6px;
+            background: #1677ff;
+            /* 按钮主色 */
+            color: #fff;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        /* 按钮禁用状态 */
+        .btn[disabled] {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        /* 提示文字 */
+        .tips {
+            font-size: 12px;
+            color: #9aa4af;
+        }
+
+        /* 协议勾选区 */
+        .agreement {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #6b7785;
+        }
+
+        footer {
+            justify-content: center;
+        }
+
+        /* 验证码区隐藏时不显示 */
+        #smsRow[hidden] {
+            display: none;
+        }
+
+        /* 错误提示样式 */
+        .error {
+            color: #e5484d;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <strong>QQ</strong>
+        </div>
+        <nav>
+            <a href="#" aria-label="语言">简体中文</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="card">
+            <h1>欢迎注册QQ</h1>
+            <p class="subtitle">每一天，乐在沟通。</p>
+
+            <form id="form" onsubmit="return false">
+                <div class="field">
+                    <div class="input">
+                        <input id="nickname" name="nickname" placeholder="昵称（例如：Somehow）" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="input">
+                        <input id="password" type="password" name="password" placeholder="密码（8-16个字符）" required>
+                    </div>
+                    <div class="tips">长度 8-16 个字符，建议包含字母与数字</div>
+                    <div id="pwdErr" class="error" hidden>密码需要 8-16 位</div>
+                </div>
+
+                <div class="field row gap8">
+                    <div class="input" style="width:120px">
+                        <select name="code" id="code">
+                            <option value="+86">+86</option>
+                            <option value="+852">+852</option>
+                            <option value="+853">+853</option>
+                            <option value="+886">+886</option>
+                        </select>
+                    </div>
+                    <div class="input" style="flex:1">
+                        <input id="phone" type="tel" name="phone" placeholder="手机号" required>
+                    </div>
+                </div>
+
+                <div class="field row gap8" id="smsRow" hidden>
+                    <div class="input" style="flex:1">
+                        <input id="sms" type="text" inputmode="numeric" pattern="[0-9]*" name="sms" placeholder="短信验证码">
+                    </div>
+                    <button id="sendBtn" type="button" class="btn" style="width:120px;background:#e7f0ff;color:#1677ff"
+                        disabled>发送验证码</button>
+                </div>
+
+                <label class="field agreement">
+                    <input id="agree" type="checkbox" name="agree" required>
+                    我已阅读并同意 <a href="#">服务协议</a> 和 <a href="#">隐私保护指引</a>
+                </label>
+
+                <div class="field">
+                    <button id="submitBtn" class="btn" type="submit" disabled>立即注册</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <small>教学示例 · 无实际注册功能</small>
+    </footer>
+
+    <script>
+
+
+
+        // 1) 手机号聚焦显示验证码
+        // 什么意思？找到页面上 id 为 "phone" 的元素（手机号输入框）；给它贴上一个叫 "phone" 的标签
+        // 以后想用这个元素，直接叫 "phone" 就行了
+
+        // 什么是document.getElementById？
+        // document 是网页的意思
+        // getElementById 是一个方法，意思是“通过ID获取元素”
+        // 其中phone就是要找的元素ID 这个方法会返回一个元素对象
+        // 什么是元素？网页上的每个部分都是元素：
+        // 输入框是元素
+        // 按钮是元素
+        // 文字是元素
+        // 图片是元素
+        // <input id="phone" type="tel" name="phone" placeholder="手机号">
+        // 这就是一个输入框元素，我们给它起了个 ID 叫 "phone"。
+
+        const phone = document.getElementById('phone');
+        const smsRow = document.getElementById('smsRow');
+        // ['focus','click'].forEach(evt => phone.addEventListener(evt, () => {
+        //   smsRow.hidden = false;
+        // }));
+
+        // 确保各种操作方式下都能正常工作
+        // 当点击到手机号输入框时，显示验证码区域
+        phone.addEventListener('click', () => {
+            // phone 手机号输入框元素
+            // addEventListener 绑定事件监听
+            // click 点击事件
+            // () => {} 箭头函数，事件触发时执行的代码
+            // smsRow 验证码区域元素
+            // hidden 属性 控制元素显示隐藏
+            smsRow.hidden = false;
+        });
+
+        // 当聚焦手机号输入框时，显示验证码区域
+        phone.addEventListener('focus', () => {
+            smsRow.hidden = false;
+        });
+
+        // 2) 发送验证码倒计时（演示版，不发请求）
+
+        // 这里同理获取发送验证码的按钮元素
+        const sendBtn = document.getElementById('sendBtn');
+        // 定义一个计时器，值初始化为空
+        let timer = null;
+        // 初始化剩余时间为0
+        let left = 0;
+        // 默认启用发送验证码按钮
+        sendBtn.disabled = false;
+        // 依旧是绑定事件监听，只不过这次我们要给按钮加，毕竟我想的需求是点击当前按钮时能触发60s计时器
+        sendBtn.addEventListener('click', () => {
+            // 如果计时器已经在跑了（大于0说明计时器正在运行中），就不理它
+            if (left > 0) return;
+            // 否则，就把 left 设置为60，表示开始60秒倒计时。
+            left = 60;
+            // 调用 updateSendBtn 更新按钮文字和状态
+            updateSendBtn();
+            // 创建一个计时器，每隔1秒执行一次，并把 left 减1
+            // setInterval(fn, time)，每个一定时间执行一次指定的代码
+            timer = setInterval(() => {
+                left--;
+                updateSendBtn();
+                if (left <= 0) {
+                    clearInterval(timer);
+                    timer = null;
+                }
+            }, 1000);
+        });
+
+        // 更新发送按钮的显示，更新倒计时
+        function updateSendBtn() {
+            if (left > 0) {
+                // 设置按钮文字为剩余秒数加"s"，如"59s"、"30s"等。
+                // textContent 用来设置元素的文字内容
+                // disabled 用来设置按钮是否禁用，这里我们设置禁用，防止用户在倒计时期间再次点击。
+                // ${left} 是模板字符串语法，把变量 left 的值插入到字符串中
+                sendBtn.textContent = `${left}s`;
+                sendBtn.disabled = true;
+            } else {
+                sendBtn.textContent = '发送验证码';
+                sendBtn.disabled = false;
+            }
+        }
+
+        // 3) 简单校验：密码长度
+        const pwd = document.getElementById('password');
+        const pwdErr = document.getElementById('pwdErr');
+        pwd.addEventListener('input', () => {
+            const ok = pwd.value.length >= 8 && pwd.value.length <= 16;
+            pwdErr.hidden = ok;
+        });
+
+        // 4) 协议勾选后才能提交
+        const agree = document.getElementById('agree');
+        const submitBtn = document.getElementById('submitBtn');
+        function toggleSubmit() {
+            // agree.checked 检查协议勾选框是否被勾选（true/false）
+            // 如果协议勾选了（agree.checked为true），!agree.checked为false，按钮启用
+            // 如果协议未勾选（agree.checked为false），!agree.checked为true，按钮禁用
+            submitBtn.disabled = !agree.checked;
+        }
+        // 给协议勾选框添加改变事件监听器。当勾选状态改变时，调用toggleSubmit函数。
+        agree.addEventListener('change', toggleSubmit);
+        // 立即调用一次toggleSubmit函数，设置初始状态（页面加载时协议未勾选，按钮应该禁用）。
+        toggleSubmit();
+
+        // 5) 假提交：校验基本条件
+        document.getElementById('form').addEventListener('submit', () => {
+            // 检查提交按钮是否被禁用：
+            // 如果按钮被禁用（协议未勾选），直接结束函数（return）
+            // 如果按钮启用（协议已勾选），继续执行下面的代码
+            if (submitBtn.disabled) return;
+            // alert() 显示弹窗
+            // 使用模板字符串（反引号`包围）插入变量
+            alert(`演示提交：\n昵称=${document.getElementById('nickname').value}\n区号=${document.getElementById('code').value}\n手机号=${phone.value}\n验证码=${document.getElementById('sms').value}`);
+        });
+    </script>
+</body>
+
+</html>

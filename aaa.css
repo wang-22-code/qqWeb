@@ -1,0 +1,145 @@
+body{
+    background: /* 设置背景为线性渐变 */
+        linear-gradient(to bottom, #eaf6ff, #d6ecff);
+        padding: 0px 0px 0px 0px ;
+}
+header{
+    margin: 10px 0px 0px 0px;
+    font-size: 20px;
+    justify-content: space-between;
+}
+.xian{
+    margin:0;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    min-height: 75vh; 
+    margin: 0 0 0 100px;
+    padding: 0px 100px 100px 20px ;
+
+
+
+
+    /* text-align: center; */
+    /* padding: 0px;
+    margin: 10px; */
+}
+.feedback1{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+}
+.t1{/*欢迎注册请求*/
+  
+    margin: 0px 0 0 5px;
+    padding: 0px;
+}
+.t2{/*每一天，乐在沟通*/
+    margin: 0 0 10px 5px;
+    padding: 0px;
+}
+/* .feedback12{
+    text-align: end;
+    margin: 0;
+    padding: 0;
+} */
+
+
+.main1{/*昵称输入框*/
+    margin: 7px ;
+    padding: 5px 175px 5px 5px;
+    border-radius: 6px;
+}
+.main2{/*密码输入框*/
+    margin: 7px;
+    padding: 5px 175px 5px 5px;
+    border-radius: 6px;
+}
+.main_str{/*国区标准*/
+    margin: 7px 10px 0 7px;
+    padding: 5px 0 5px 0px ;
+    border-radius: 6px;
+     
+}
+.main3{/*手机号码*/
+    margin: 7px 0px;
+    padding: 5px 118px 5px 0px;
+    border-radius: 6px;
+     
+}
+.main4{/*我已阅读并同意*/
+    margin: 0px 0 0 10px ;
+    padding: 0px 0px 0px 10px;
+    font-size: 16px;
+    display:inline-block;
+    width: 20px;
+    height: 14px;
+    border-radius :0%;
+}
+.re_password{/*短信验证码*/
+    margin: 7px 10px 0 7px;
+    padding: 5px,75px 5px 0px ;
+    font-size: 18px;
+    border-radius: 6px;
+
+}
+.send_password{/*发送验证码*/
+    margin: 7px 0px;
+    padding: 5px 118px 5px 0px;
+    border-radius: 6px;
+    size:#e7f0ff;
+    background:#db1a27;
+}
+
+.yanse{/*服务协议和隐私保护指引的颜色 */
+    color: #1677ff;
+}
+ /* 表单项间距 */
+.field {
+    margin: 10px 0;
+}
+.main5{/*立即注册*/
+    margin: 0px 10px 10px 7px ;
+    padding: 10px 137px 10px 125px;
+    font-size: 20px;
+   border-radius: 6px;
+    border: #fff;/*边框为白色*/
+    background: #1677ff; /* 背景色为蓝色 */
+    color: #fff;   /* 文字颜色为白色 */
+   
+    
+}
+input{
+     border: 1px solid #e5eef7;
+    /* 边框颜色 */
+}
+.main1,.main2,.main3,select,.re_password{
+    border-color: #9cc7ff;
+    box-shadow: 0 0 0 3px rgba(22, 119, 255, .15);
+}
+.send_password{
+    margin: 0px 0px 0px 0px ;
+    padding: 0px 10px 0px 0px;
+    font-size: 20px;
+   border-radius: 6px;
+    border: #fff;/*边框为白色*/
+    background: #1677ff; /* 背景色为蓝色 */
+    color: #fff;   /* 文字颜色为白色 */
+}
+.tips{
+    margin: 0px 0px 0px 0px ;
+    padding: 0px 0px 0px 8px;
+
+}
+
+
+
+
+
+footer{
+    text-align: center;
+    margin: 0px;
+}
