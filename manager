@@ -1,4 +1,4 @@
-function Manager(size = 4, aim = 128) {
+function Manager(size = 4, aim = 2048) {
   this.size = size;
   this.aim = aim;
   this.render = new Render();
@@ -89,7 +89,6 @@ Manager.prototype.listenerFn = function (direction) {
     this.addRandomTile();
     if (this.checkFailure()) {
       this.status = 'FAILURE';
-
     }
     this._render();
   }
@@ -158,11 +157,11 @@ Manager.prototype.getNearestAvaibleAim = function (aim, direction) {
   };
 };
 
-//判断游戏是否失败
+// 判断游戏是否失败
 Manager.prototype.checkFailure = function () {
-  //获取空白的Cell
+  // 获取空白的Cell
   const emptyCells = this.grid.availableCells();
-  //存在空白，游戏没有失败
+  // 如果存在空白，则游戏肯定没有失败
   if (emptyCells.length > 0) {
     return false;
   }
@@ -170,28 +169,26 @@ Manager.prototype.checkFailure = function () {
   for (let row = 0; row < this.grid.size; row++) {
     for (let column = 0; column < this.grid.size; column++) {
       let now = this.grid.get({ row, column });
-      //根据4个方向，判断临近的Tile的value值是否相同
+
+      // 根据4个方向，判断临近的Tile的Value值是否相同
       let directions = [
         { row: 0, column: 1 },
         { row: 0, column: -1 },
         { row: 1, column: 0 },
         { row: -1, column: 0 }
       ];
-      for (let i = 0; i < direction.length; i++) {
+      for (let i = 0; i < directions.length; i++) {
         const direction = directions[i];
         const next = this.grid.get({
           row: row + direction.row,
           column: column + direction.column
         });
-        //判断Value是否相同
+        // 判断Value是否相同
         if (next && next.value === now.value) {
           return false;
-
         }
       }
-
     }
   }
   return true;
-
-}
+};
