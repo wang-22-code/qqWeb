@@ -2,43 +2,51 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>添加书籍</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>添加书籍</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+    </style>
 </head>
 
 <body>
-  <h2>添加书籍</h2>
-  <form action="/book/save" method="POST">
-    <div>
-      <label>书的名称:</label>
-      <input type="text" name="name">
+<h2>添加书籍</h2>
+<form action="/book/save" th:object="${book}" method="POST">
+    <div th:classappend="${#fields.hasErrors('name')} ? 'error' : ''">
+        <label>书的名称:</label>
+        <input type="text" th:field="*{name}">
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
     </div>
     <div>
-      <label>书的作者:</label>
-      <input type="text" name="author">
+        <label>书的作者:</label>
+        <input type="text" name="author">
     </div>
     <div>
-      <label>书的描述:</label>
-      <textarea name="desc"></textarea>
+        <label>书的描述:</label>
+        <textarea name="desc"></textarea>
+    </div>
+    <div th:classappend="${#fields.hasErrors('isbn')} ? 'error' : ''">
+        <label>书的编号:</label>
+        <input type="text" th:field="*{isbn}">
+        <p th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}"></p>
     </div>
     <div>
-      <label>书的编号:</label>
-      <input type="text" name="isbn">
+        <label>书的价格:</label>
+        <input type="text" name="price">
     </div>
     <div>
-      <label>书的价格:</label>
-      <input type="text" name="price">
+        <label>书的封面:</label>
+        <input type="text" name="pictureUrl">
     </div>
     <div>
-      <label>书的封面:</label>
-      <input type="text" name="pictureUrl">
+        <button type="submit">注册</button>
     </div>
-    <div>
-      <button type="submit">注册</button>
-    </div>
-  </form>
+</form>
 </body>
 
 </html>
