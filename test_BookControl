@@ -1,0 +1,49 @@
+package com.bookstore.control;
+
+import com.bookstore.service.BookService;
+import com.bookstore.service.impl.BookServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+
+import com.bookstore.model.*;
+
+@Controller
+public class BookControl {
+  @Autowired
+  private BookService bookService;
+
+
+
+
+
+
+
+  @GetMapping("/book/add.html")
+  public String addBookHtml(Model model) {
+    return "book/addBook";
+  }
+
+  @PostMapping("/book/save")
+  public String saveBook(Book book) {
+//    for (Book book1 : books) {
+//      if (book.getIsbn().equals(book1.getIsbn())) {
+//        return "book/saveBookError";
+//      }
+//    }
+//
+//    books.add(book);
+
+    bookService.saveBook(book);
+    return "book/saveBookSuccess";
+  }
+  @GetMapping("/book/list")
+  public String List (Book book, Model model) {
+    model.addAttribute("book", book);
+    return "book/addBook";
+  }
+
+}
