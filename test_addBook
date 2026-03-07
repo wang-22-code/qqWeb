@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>添加书籍</title>
+</head>
+
+<body>
+  <h2>添加书籍</h2>
+  <form action="/book/save" method="POST">
+    <div>
+      <label>书的名称:</label>
+      <input type="text" name="name">
+    </div>
+    <div>
+      <label>书的作者:</label>
+      <input type="text" name="author">
+    </div>
+    <div>
+      <label>书的描述:</label>
+      <textarea name="desc"></textarea>
+    </div>
+    <div>
+      <label>书的编号:</label>
+      <input type="text" name="isbn">
+    </div>
+    <div>
+      <label>书的价格:</label>
+      <input type="text" name="price">
+    </div>
+    <div>
+      <label>书的封面:</label>
+      <input type="text" name="pictureUrl">
+    </div>
+    <div>
+      <button type="submit">注册</button>
+    </div>
+  </form>
+</body>
+
+</html>
