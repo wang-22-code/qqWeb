@@ -1,0 +1,138 @@
+package fm.douban.service.impl;
+
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+import fm.douban.model.User;
+import fm.douban.model.UserQueryParam;
+import fm.douban.service.UserService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.LongSupplier;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+  private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
+  @Autowired
+  private MongoTemplate mongoTemplate;
+
+  @Override
+  public User add(User user) {
+    if(user == null){
+      LOG.error("input user is null.");
+      return null;
+
+    }
+    return mongoTemplate.insert(user);
+  }
+
+  @Override
+  public User get(String id) {
+    if(StringUtils.isEmpty(id)){
+      LOG.error("input user Id is blank.");
+      return null;
+    }
+    User user = mongoTemplate.findById(id,User.class);
+    return user;
+  }
+
+  @Override
+  public Page<User> list(UserQueryParam param) {
+    if(param == null){
+      LOG.error("input User data is not correct.");
+      return null;
+    }
+    Criteria criteria = new Criteria();
+    List<Criteria> subCris = new ArrayList<>();
+    if (StringUtils.hasText(param.getLoginName())) {
+      subCris.add(Criteria.where("loginName").is(param.getLoginName()));
+    }
+    if (StringUtils.hasText(param.getPassword())) {
+      subCris.add(Criteria.where("password").is(param.getLoginName()));
+    }
+    if (StringUtils.hasText(param.getMobile())) {
+      subCris.add(Criteria.where("mobile").is(param.getLoginName()));
+    }
+    //至少有一个查询条件
+    if (subCris.isEmpty()) {
+      LOG.error("input User query param is not correct.");
+      return null;
+    }
+    //三个子条件
+    criteria.andOperator(subCris.toArray(new Criteria[]{}));
+    //构建条件查询对象
+    Query query = new Query(criteria);
+
+    long count = mongoTemplate.count(query, User.class);
+    Pageable pageable = PageRequest.of(param.getPageNum()-1,param.getPageSize());
+    query.with(pageable);
+    //查询结果
+    List<User> users = mongoTemplate.find(query, User.class);
+    //构建分页器
+    Page<User> pageResult = PageableExecutionUtils.getPage(users,pageable,new LongSupplier() {
+      @Override
+      public long getAsLong() {
+        return count;
+      }
+    });
+
+    return pageResult;
+  }
+
+  @Override
+  public boolean modify(User user) {
+    if(user == null || StringUtils.isEmpty(user.getId())){
+      LOG.error("input User data  is not correct.");
+      return false;
+    }
+    //查询条件
+    Query query = new Query(Criteria.where("id").is(user.getId()));
+    Update update = new Update();
+    if(user.getLoginName() != null){
+      update.set("loginName", user.getLoginName());
+    }
+    if(user.getPassword() != null){
+      update.set("password", user.getPassword());
+    }
+    if(user.getMobile() != null){
+      update.set("mobile", user.getMobile());
+    }
+    UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
+    return result != null && result.getModifiedCount() > 0;
+  }
+
+  @Override
+  public boolean delete(String id) {
+    if(StringUtils.isEmpty(id)){
+      LOG.error("input user Id is blank.");
+      return false;
+    }
+    User user = new User();
+    user.setId(id);
+
+    DeleteResult result = mongoTemplate.remove(user);
+    return result != null && result.getDeletedCount() > 0;
+
+  }
+
+
+
+
+
+}
